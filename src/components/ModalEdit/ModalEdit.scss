@@ -1,0 +1,30 @@
+.Modal__add,
+.Modal__edit {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  height: 400px;
+  width: 400px;
+
+  border: 1px solid darkgray;
+  background-color: white;
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+  }
+
+  &__input {
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+  }
+}
