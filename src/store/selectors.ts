@@ -7,3 +7,4 @@ export const getProducts = (state: RootState) => state.allProducts;
 export const getIdRemoteProduct = (state: RootState) => state.idRemoteProduct;
 export const getIdForViewProduct = (state: RootState) => state.idForViewProduct;
 export const getViewProduct = (state: RootState) => state.viewProduct;
+export const getLastId = (state: RootState) => state.lastId;

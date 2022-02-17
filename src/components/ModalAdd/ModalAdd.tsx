@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import '../ModalEdit/ModalEdit.scss';
 import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { hasModalAdd } from '../../store/selectors';
+import { getLastId, hasModalAdd } from '../../store/selectors';
 import { addOneProduct, closeModalAdd } from '../../store/actions';
 
 export const ModalAdd: React.FC = () => {
   const isOpen = useSelector(hasModalAdd);
+  const lastId = useSelector(getLastId);
   const dispatch = useDispatch();
   const [imageUrl, setImageUrl] = useState('');
   const [productName, setName] = useState('');
@@ -83,7 +84,7 @@ export const ModalAdd: React.FC = () => {
 
   const addNewProduct = () => {
     const newProduct: Product = {
-      id: 0,
+      id: lastId + 1,
       imageUrl,
       name: productName,
       count: count || 0,

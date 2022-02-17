@@ -11,6 +11,14 @@ export const SET_ID_REMOTE_PRODUCT = 'SET_ID_REMOTE_PRODUCT';
 export const SET_ID_VIEW_PRODUCT = 'SET_ID_VIEW_PRODUCT';
 export const SET_VIEW_PRODUCT = 'SET_VIEW_PRODUCT';
 export const EDIT_PRODUCT = 'EDIT_PRODUCT';
+export const SET_LAST_ID = 'SET_LAST_ID';
+
+export const setLastId = (payload: number) => {
+  return ({
+    type: SET_LAST_ID,
+    payload,
+  });
+};
 
 export const setViewProductEdit = (payload: Product | null) => {
   return ({

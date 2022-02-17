@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './ProductsList.scss';
 
@@ -8,6 +8,7 @@ import {
   openModalAdd,
   openModalRemove,
   setIdForViewProduct,
+  setLastId,
   setProductId,
 } from '../../store/actions';
 import { getProducts } from '../../store/selectors';
@@ -18,6 +19,41 @@ import { Loader } from '../Loader';
 export const ProductsList: React.FC = () => {
   const dispatch = useDispatch();
   const products = useSelector(getProducts);
+  const [sortBy, setSortBy] = useState('Sort_by');
+  const [viewProduct, setViewProduct] = useState<Product[]>([]);
+
+  const sortProducts = (sort: string) => {
+    switch (sort) {
+      case 'SortCount':
+        setViewProduct([...products.sort((a, b) => (a.count - b.count))]);
+        break;
+      case 'SortWeight':
+        setViewProduct([...products.sort((a, b) => (+a.weight.replaceAll(/[^0-9]/gi, '') - +b.weight.replaceAll(/[^0-9]/gi, '')))]);
+        break;
+      default:
+        setViewProduct([...products.sort((a, b) => {
+          return a.name.localeCompare(b.name);
+        })]);
+    }
+  };
+
+  const updateLastId = () => {
+    let maxId = 0;
+
+    products.forEach((product) => {
+      if (product.id > maxId) {
+        maxId = product.id;
+      }
+    });
+
+    sortProducts('default');
+    setSortBy('default');
+    dispatch(setLastId(maxId));
+  };
+
+  useEffect(() => {
+    updateLastId();
+  }, [products]);
 
   useEffect(() => {
     dispatch(addProductList(productsServer));
@@ -36,7 +72,14 @@ export const ProductsList: React.FC = () => {
     dispatch(setIdForViewProduct(+event.currentTarget.value));
   };
 
-  if (products.length === 0) {
+  const handlerSort = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const { value } = event.currentTarget;
+
+    setSortBy(value);
+    sortProducts(value);
+  };
+
+  if (viewProduct.length === 0) {
     return (
       <Loader />
     );
@@ -44,9 +87,24 @@ export const ProductsList: React.FC = () => {
 
   return (
     <>
+      <label htmlFor="sort">
+        Sort by
+        &nbsp;
+        <select
+          name="sort"
+          id="sort"
+          value={sortBy}
+          onChange={handlerSort}
+        >
+          <option value="Sort_by">Alphabet</option>
+          <option value="SortCount">Count</option>
+          <option value="SortWeight">Weight</option>
+        </select>
+      </label>
+
       <ul className="ProductsList__list">
         {
-          products.map((product) => (
+          viewProduct.map((product) => (
             <li
               key={product.id}
               className="ProductsList__item"

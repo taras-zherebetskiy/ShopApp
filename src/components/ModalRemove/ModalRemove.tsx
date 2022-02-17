@@ -16,7 +16,7 @@ export const ModalRemove: React.FC = () => {
     dispatch(closeModalRemove());
   };
 
-  const handlerCloseModal = async () => {
+  const handlerCloseModal = () => {
     dispatch(closeModalRemove());
   };
 

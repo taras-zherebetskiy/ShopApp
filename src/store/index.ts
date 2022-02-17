@@ -12,6 +12,7 @@ import {
   REMOVE_PRODUCT,
   SET_ID_REMOTE_PRODUCT,
   SET_ID_VIEW_PRODUCT,
+  SET_LAST_ID,
   SET_VIEW_PRODUCT,
 } from './actions';
 
@@ -23,6 +24,7 @@ export type RootState = {
   idForViewProduct: number;
   allProducts: Product[];
   viewProduct: Product | null;
+  lastId: number;
 };
 
 export const initialState: RootState = {
@@ -33,6 +35,7 @@ export const initialState: RootState = {
   idForViewProduct: 0,
   allProducts: [],
   viewProduct: null,
+  lastId: 0,
 };
 
 const rootReducer = (state = initialState, action: AnyAction) => {
@@ -48,6 +51,9 @@ const rootReducer = (state = initialState, action: AnyAction) => {
           return product;
         }),
       };
+
+    case SET_LAST_ID:
+      return { ...state, lastId: action.payload };
 
     case SET_VIEW_PRODUCT:
       return { ...state, viewProduct: { ...action.payload } };
