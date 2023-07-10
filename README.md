@@ -1,3 +1,3 @@
 # SHOP
 ## React TypeScript Redux
-[DEMO](https://toros-zz.github.io/ShopApp/)
+[DEMO](https://taras-zherebetskiy.github.io/ShopApp/)
